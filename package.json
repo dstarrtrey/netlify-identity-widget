@@ -76,7 +76,6 @@
     "react-demo": "cd example && yarn && yarn start",
     "release": "node ./script/release.js",
     "test": "eslint src",
-    "version": "run-s release changelog",
-    "preinstall": "npm run prebuild && npm run build"
+    "version": "run-s release changelog"
   }
 }
