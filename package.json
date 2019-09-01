@@ -77,6 +77,6 @@
     "release": "node ./script/release.js",
     "test": "eslint src",
     "version": "run-s release changelog",
-    "preinstall": "run-s prebuild && run-s build"
+    "prepare": "run-s prebuild && run-s build"
   }
 }
