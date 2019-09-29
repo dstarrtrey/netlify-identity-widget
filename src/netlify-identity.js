@@ -200,7 +200,6 @@ function init(options = {}) {
     APIUrl,
     logo = true,
     namePlaceholder,
-    disableAccessTokenCheck = false
   } = options;
   const controlEls = document.querySelectorAll(
     "[data-netlify-identity-menu],[data-netlify-identity-button]"
@@ -236,7 +235,7 @@ function init(options = {}) {
       iframe.contentDocument.body,
       root
     );
-    runRoutes(disableAccessTokenCheck);
+    runRoutes();
   };
   setStyle(iframe, iframeStyle);
   iframe.src = "about:blank";
