@@ -157,37 +157,39 @@ const errorRoute = /error=access_denied&error_description=403/;
 const accessTokenRoute = /access_token=/;
 
 function runRoutes(disableAccessTokenCheck) {
-  const hash = (document.location.hash || "").replace(/^#\/?/, "");
-  if (!hash) {
-    return;
-  }
-
-  const m = hash.match(routes);
-  if (m) {
-    store.verifyToken(m[1], m[2]);
-    document.location.hash = "";
-  }
-
-  const em = hash.match(errorRoute);
-  if (em) {
-    store.openModal("signup");
-    document.location.hash = "";
-  }
-
-  if (!disableAccessTokenCheck) {
-    const am = hash.match(accessTokenRoute);
-    if (am) {
-      const params = {};
-      hash.split("&").forEach(pair => {
-        const [key, value] = pair.split("=");
-        params[key] = value;
-      });
-      if (!!document && params["access_token"]) {
-        document.cookie = `nf_jwt=${params["access_token"]}`;
-      }
+  if (!disableAccessTokenCheck || (document.location.pathname === '/' || document.location.pathname === '')) {
+    const hash = (document.location.hash || "").replace(/^#\/?/, "");
+    if (!hash) {
+      return;
+    }
+  
+    const m = hash.match(routes);
+    if (m) {
+      store.verifyToken(m[1], m[2]);
       document.location.hash = "";
-      store.openModal("login");
-      store.completeExternalLogin(params);
+    }
+  
+    const em = hash.match(errorRoute);
+    if (em) {
+      store.openModal("signup");
+      document.location.hash = "";
+    }
+  
+    if (!disableAccessTokenCheck) {
+      const am = hash.match(accessTokenRoute);
+      if (am) {
+        const params = {};
+        hash.split("&").forEach(pair => {
+          const [key, value] = pair.split("=");
+          params[key] = value;
+        });
+        if (!!document && params["access_token"]) {
+          document.cookie = `nf_jwt=${params["access_token"]}`;
+        }
+        document.location.hash = "";
+        store.openModal("login");
+        store.completeExternalLogin(params);
+      }
     }
   }
 }
