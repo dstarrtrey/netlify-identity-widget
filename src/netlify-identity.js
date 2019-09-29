@@ -191,6 +191,8 @@ function runRoutes(disableAccessTokenCheck) {
         store.completeExternalLogin(params);
       }
     }
+  } else {
+    return;
   }
 }
 
