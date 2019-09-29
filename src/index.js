@@ -8,8 +8,8 @@ if (typeof window !== undefined) {
 }
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
-    netlifyIdentity.init();
+    netlifyIdentity.init({ disableAccessTokenCheck: true });
   });
 } else {
-  netlifyIdentity.init();
+  netlifyIdentity.init({ disableAccessTokenCheck: true });
 }
