@@ -157,24 +157,27 @@ const errorRoute = /error=access_denied&error_description=403/;
 const accessTokenRoute = /access_token=/;
 
 function runRoutes(disableAccessTokenCheck) {
-  if (!disableAccessTokenCheck || (document.location.pathname === '/' || document.location.pathname === '')) {
+  if (
+    !disableAccessTokenCheck ||
+    (document.location.pathname === "/" || document.location.pathname === "")
+  ) {
     const hash = (document.location.hash || "").replace(/^#\/?/, "");
     if (!hash) {
       return;
     }
-  
+
     const m = hash.match(routes);
     if (m) {
       store.verifyToken(m[1], m[2]);
       document.location.hash = "";
     }
-  
+
     const em = hash.match(errorRoute);
     if (em) {
       store.openModal("signup");
       document.location.hash = "";
     }
-  
+
     if (!disableAccessTokenCheck) {
       const am = hash.match(accessTokenRoute);
       if (am) {
